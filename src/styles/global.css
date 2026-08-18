@@ -565,8 +565,8 @@ a:focus-visible {
 /* Hero Section */
 .hero {
   position: relative;
-  min-height: 100svh;
-  padding: calc(var(--header-height) + 80px) 0 112px;
+  height: calc(100svh - var(--header-height));
+  padding: 0;
   background: var(--gradient-navy);
   color: white;
   overflow: hidden;
@@ -742,6 +742,13 @@ a:focus-visible {
 .hero-inner {
   position: relative;
   z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  max-width: var(--max-width-section-content);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-layout {
@@ -749,7 +756,7 @@ a:focus-visible {
   grid-template-columns: 5fr 7fr;
   gap: 64px;
   align-items: center;
-  min-height: calc(100svh - var(--header-height) - 192px);
+  width: 100%;
 }
 
 .hero-copy {
@@ -2280,18 +2287,24 @@ a:focus-visible {
     font-size: 1.5rem;
   }
 
-  .hero {
-    padding-top: calc(var(--header-height) + 40px);
-    padding-bottom: 60px;
-  }
-
   .hero-copy {
-    margin-bottom: 48px;
+    margin-bottom: 32px;
   }
 
   .hero-layout {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 32px;
+  }
+
+  .hero-inner {
+    padding: 0 20px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .hero {
+    height: auto;
+    min-height: calc(100svh - var(--header-height));
   }
 
   .stat-grid,
@@ -2401,11 +2414,6 @@ a:focus-visible {
 
   h3 {
     font-size: 1.25rem;
-  }
-
-  .hero {
-    padding-top: calc(var(--header-height) + 30px);
-    padding-bottom: 48px;
   }
 
   .hero-orb {
