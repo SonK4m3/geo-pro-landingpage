@@ -23,7 +23,7 @@ const languageLabel = isEnglish ? 'VI' : 'EN';
         class="group inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full
           text-white font-medium text-sm transition-all duration-200
           hover:bg-white/10 active:scale-95"
-        aria-label={`Switch language to ${languageLabel}`}
+        aria-label={`${copy.ui.switchLang} ${languageLabel}`}
       >
         <span class="opacity-70 group-hover:opacity-100">{languageLabel}</span>
       </a>
@@ -54,7 +54,7 @@ const languageLabel = isEnglish ? 'VI' : 'EN';
           class="inline-flex items-center justify-center w-10 h-10
             border border-white/20 rounded-full text-white text-xs font-bold
             transition-all duration-200 hover:bg-white/10 active:scale-95"
-          aria-label={`Switch language to ${languageLabel}`}
+          aria-label={`${copy.ui.switchLang} ${languageLabel}`}
         >
           {languageLabel}
         </a>

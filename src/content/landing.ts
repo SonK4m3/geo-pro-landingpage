@@ -122,6 +122,13 @@ export type LandingCopy = {
     emailHref: string;
   };
   footer: { copyright: string; note: string; backToTop: string };
+  ui: {
+    visibilityMap: string;
+    live: string;
+    visibilityAssessment: string;
+    secondaryCta: string;
+    switchLang: string;
+  };
 };
 
 const shared = {
@@ -487,6 +494,13 @@ const vi: LandingCopy = {
     note: 'Cảm ơn đã theo dõi!',
     backToTop: 'Lên đầu trang',
   },
+  ui: {
+    visibilityMap: 'BẢN ĐỒ AI VISIBILITY',
+    live: 'TRỰC TIẾP',
+    visibilityAssessment: 'KHẢO SÁT AI VISIBILITY',
+    secondaryCta: 'Xem GEO hoạt động',
+    switchLang: 'Chuyển sang',
+  },
 };
 
 const en: LandingCopy = {
@@ -733,6 +747,13 @@ const en: LandingCopy = {
     copyright: '© 2026 GEO Pro.',
     note: 'Thanks for stopping by!',
     backToTop: 'Back to top',
+  },
+  ui: {
+    visibilityMap: 'AI VISIBILITY MAP',
+    live: 'LIVE',
+    visibilityAssessment: 'AI VISIBILITY ASSESSMENT',
+    secondaryCta: 'See how GEO works',
+    switchLang: 'Switch to',
   },
 };
 

@@ -62,7 +62,7 @@ const layerTone: Record<string, string> = {
               <Icon name="tabler:arrow-up-right" aria-hidden="true" />
             </a>
             <a class="button button--ghost" href={`#${ids.solution}`}>
-              {copy.locale === 'vi' ? 'Xem GEO hoạt động' : 'See how GEO works'}
+              {copy.ui.secondaryCta}
               <Icon name="tabler:arrow-right" aria-hidden="true" />
             </a>
           </div>
@@ -74,8 +74,8 @@ const layerTone: Record<string, string> = {
         <div class="hero-visual hero-board-reveal">
           <div class="visibility-board">
             <div class="visibility-board__top">
-              <span>AI VISIBILITY MAP</span>
-              <span class="live-indicator"><i></i> LIVE</span>
+              <span>{copy.ui.visibilityMap}</span>
+              <span class="live-indicator"><i></i> {copy.ui.live}</span>
             </div>
             <div class="layer-grid">
               {copy.hero.layers.map((layer) => (
@@ -262,7 +262,7 @@ const layerTone: Record<string, string> = {
         <p id="contact-details" class="contact-details">{copy.contact.name} <span>·</span> {copy.contact.phone} <span>·</span> {copy.contact.emailAddress}</p>
       </div>
       <div class="assessment-card" data-reveal>
-        <div class="assessment-card__head"><Icon name="tabler:clipboard-check" aria-hidden="true" /><span>AI VISIBILITY ASSESSMENT</span></div>
+        <div class="assessment-card__head"><Icon name="tabler:clipboard-check" aria-hidden="true" /><span>{copy.ui.visibilityAssessment}</span></div>
         <ul>{copy.contact.bullets.map((bullet) => <li><Icon name="tabler:circle-check-filled" aria-hidden="true" /><span>{bullet}</span></li>)}</ul>
       </div>
     </div>
