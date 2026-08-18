@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "montserrat",
+        "createdAt": "2026-08-17T07:01:12.319Z",
+        "reason": "Brand typography constraint in PRODUCT.md"
+      }
+    ]
+  }
+}

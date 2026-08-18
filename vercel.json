@@ -1,0 +1,57 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
+  "framework": "astro",
+  "outputDirectory": "dist",
+  "env": {
+    "PUBLIC_SITE_URL": {
+      "description": "Production domain URL (e.g., https://geoproasia.com)"
+    },
+    "PUBLIC_GA_MEASUREMENT_ID": {
+      "description": "Google Analytics 4 Measurement ID (e.g., G-XXXXXXXXXX)"
+    },
+    "GOOGLE_SHEETS_WEBHOOK": {
+      "description": "Google Apps Script Web App deployment URL"
+    },
+    "CONTACT_NAME": {
+      "description": "Contact person name"
+    },
+    "CONTACT_PHONE": {
+      "description": "Contact phone number"
+    },
+    "CONTACT_PHONE_HREF": {
+      "description": "Phone number for tel: link (without spaces, e.g., +84123456789)"
+    },
+    "CONTACT_EMAIL": {
+      "description": "Contact email address"
+    },
+    "CONTACT_EMAIL_HREF": {
+      "description": "Email for mailto: link"
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ]
+}

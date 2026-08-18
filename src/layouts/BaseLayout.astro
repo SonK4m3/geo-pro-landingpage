@@ -1,0 +1,84 @@
+---
+import '@/styles/global.css';
+import type { Locale } from '@/lib/i18n';
+
+type Props = {
+  locale: Locale;
+  title: string;
+  description: string;
+};
+
+const { locale, title, description } = Astro.props as Props;
+const siteUrl = (Astro.site?.href ?? 'https://example.com').replace(/\/$/, '');
+const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
+const viUrl = new URL('/', siteUrl).href;
+const enUrl = new URL('/en', siteUrl).href;
+const ogImageUrl = new URL('/og.png', siteUrl).href;
+const ogLocale = locale === 'vi' ? 'vi_VN' : 'en_US';
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'GEO Pro',
+  url: siteUrl,
+  description,
+  areaServed: 'VN',
+  serviceType: ['Generative Engine Optimization', 'AI Visibility', 'SEO', 'AIO'],
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#1F3864" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={currentUrl} />
+    <link rel="alternate" hreflang="vi" href={viUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={viUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1728" />
+    <meta property="og:image:height" content="909" />
+    <meta property="og:image:alt" content="GEO Pro — Be found. Be cited. Be chosen." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" />
+    
+    <!-- Google Analytics 4 -->
+    {gaMeasurementId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+        <script is:inline define:vars={{ gaMeasurementId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaMeasurementId, {
+            page_path: window.location.pathname,
+            page_title: document.title,
+          });
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <slot />
+  </body>
+</html>

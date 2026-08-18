@@ -1,0 +1,16 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  inverse?: boolean;
+};
+
+const { title, intro, align = 'left', inverse = false } = Astro.props as Props;
+---
+
+<div class:list={['section-heading', align === 'center' && 'section-heading--center', inverse && 'section-heading--inverse']} data-reveal>
+  <h2>{title}</h2>
+  {intro && <p class="section-intro">{intro}</p>}
+</div>

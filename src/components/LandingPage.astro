@@ -1,0 +1,256 @@
+---
+import { Icon } from 'astro-icon/components';
+import Header from '@/components/Header.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import type { LandingCopy } from '@/content/landing';
+
+type Props = { copy: LandingCopy };
+const { copy } = Astro.props as Props;
+const ids = copy.locale === 'vi'
+  ? { problem: 'bai-toan', solution: 'giai-phap', process: 'quy-trinh', pricing: 'bang-gia', contact: 'lien-he' }
+  : { problem: 'problem', solution: 'solution', process: 'process', pricing: 'pricing', contact: 'contact' };
+
+const layerTone: Record<string, string> = {
+  navy: 'layer-card--navy',
+  coral: 'layer-card--coral',
+  success: 'layer-card--success',
+};
+---
+
+<Header copy={copy} />
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--one" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--two" aria-hidden="true"></div>
+    <div class="site-container hero-inner">
+      <div class="hero-copy" data-reveal>
+        <h1>{copy.hero.title} <span>{copy.hero.titleAccent}</span></h1>
+        <p class="hero-description">{copy.hero.description}</p>
+        <a class="button button--hero" href={`#${ids.contact}`}>
+          {copy.hero.cta}
+          <Icon name="tabler:arrow-up-right" aria-hidden="true" />
+        </a>
+      </div>
+
+      <div class="visibility-board" data-reveal>
+        <div class="visibility-board__top">
+          <span>AI VISIBILITY MAP</span>
+          <span class="live-indicator"><i></i> LIVE</span>
+        </div>
+        <div class="layer-grid">
+          {copy.hero.layers.map((layer) => (
+            <article class:list={['layer-card', layerTone[layer.color]]}>
+              <div class="layer-card__header">
+                <span class="layer-icon"><Icon name={layer.icon} aria-hidden="true" /></span>
+                <strong>{layer.key}</strong>
+              </div>
+              <dl>
+                <div><dt>{copy.hero.layerLabels.where}</dt><dd>{layer.where}</dd></div>
+                <div><dt>{copy.hero.layerLabels.meaning}</dt><dd>{layer.meaning}</dd></div>
+                <div class="layer-goal"><dt>{copy.hero.layerLabels.goal}</dt><dd><Icon name="tabler:circle-check-filled" aria-hidden="true" />{layer.goal}</dd></div>
+              </dl>
+            </article>
+          ))}
+        </div>
+        <p class="visibility-close"><Icon name="tabler:bulb" aria-hidden="true" />{copy.hero.close}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy why-now">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.whyNow.eyebrow} title={copy.whyNow.title} align="center" inverse />
+      <div class="stat-grid">
+        {copy.whyNow.items.map((item, index) => (
+          <article class="stat-card" data-reveal>
+            <strong class="stat-value">{item.stat}</strong>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            {item.source && <small>{item.source}</small>}
+          </article>
+        ))}
+      </div>
+      <p class="section-quote" data-reveal><Icon name="tabler:alert-triangle" aria-hidden="true" />{copy.whyNow.close}</p>
+    </div>
+  </section>
+
+  <section id={ids.problem} class="section section--navy">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.problem.eyebrow} title={copy.problem.title} inverse />
+      <div class="problem-grid">
+        {copy.problem.items.map((item, index) => (
+          <article class="problem-card" data-reveal>
+            <div class="problem-card__icon"><Icon name={item.icon} aria-hidden="true" /></div>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))}
+      </div>
+      <p class="problem-close" data-reveal>{copy.problem.close}</p>
+    </div>
+  </section>
+
+  <section id={ids.solution} class="section solution-section">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.solution.eyebrow} title={copy.solution.title} intro={copy.solution.intro} />
+      <div class="solution-list">
+        {copy.solution.items.map((item) => (
+          <article class="solution-row" data-reveal>
+            <span class="solution-number">{item.number}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <Icon name="tabler:arrow-up-right" aria-hidden="true" />
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.approach.eyebrow} title={copy.approach.title} intro={copy.approach.intro} align="center" />
+      <div class="pillar-grid">
+        {copy.approach.pillars.map((pillar) => (
+          <article class="pillar-card" data-reveal>
+            <div class="pillar-card__header">
+              <span>{pillar.number}</span>
+              <span class="pillar-icon"><Icon name={pillar.icon} aria-hidden="true" /></span>
+            </div>
+            <h3>{pillar.title}</h3>
+            <p>{pillar.description}</p>
+            <div class="tag-list">{pillar.tags.map((tag) => <span>{tag}</span>)}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy capabilities-section">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.capabilities.eyebrow} title={copy.capabilities.title} intro={copy.capabilities.intro} inverse />
+      <div class="capability-table" data-reveal>
+        <div class="capability-row capability-row--head"><span>{copy.capabilities.areaLabel}</span><span>{copy.capabilities.descriptionLabel}</span></div>
+        {copy.capabilities.items.map((item) => (
+          <div class="capability-row">
+            <div class="capability-name"><Icon name={item.icon} aria-hidden="true" /><strong>{item.area}</strong></div>
+            <p>{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id={ids.process} class="section section--navy process-section">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.process.eyebrow} title={copy.process.title} intro={copy.process.intro} inverse />
+      <ol class="process-list">
+        {copy.process.items.map((item) => (
+          <li data-reveal>
+            <span class="process-number">{item.number}</span>
+            <div class="process-copy"><h3>{item.title}</h3><span>{item.timing}</span><p>{item.description}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section case-section">
+    <div class="site-container case-grid">
+      <div class="case-copy" data-reveal>
+        <h2>{copy.caseStudy.title}</h2>
+        <div class="case-meta"><span><Icon name="tabler:palette" aria-hidden="true" />{copy.caseStudy.category}</span><span><Icon name="tabler:map-pin" aria-hidden="true" />{copy.caseStudy.location}</span></div>
+        <p>{copy.caseStudy.description}</p>
+        <span class="case-time"><Icon name="tabler:clock" aria-hidden="true" />{copy.caseStudy.timeframe}</span>
+      </div>
+      <div class="case-results" data-reveal>
+        {copy.caseStudy.results.map((result) => (
+          <div class="case-result"><strong>{result.value}</strong><span>{result.label}</span></div>
+        ))}
+        <p><Icon name="tabler:info-circle" aria-hidden="true" />{copy.caseStudy.disclaimer}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id={ids.pricing} class="section section--white pricing-section">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.pricing.eyebrow} title={copy.pricing.title} intro={copy.pricing.intro} align="center" />
+      <div class="pricing-grid">
+        {copy.pricing.plans.map((plan) => (
+          <article class:list={['pricing-card', plan.recommended && 'pricing-card--featured']} data-reveal>
+            {plan.recommended && <span class="recommended-badge">{plan.recommended}</span>}
+            <div class="pricing-card__head"><h3>{plan.name}</h3><strong>{plan.price}</strong></div>
+            <dl>
+              <div><dt>{copy.pricing.labels.bestFor}</dt><dd>{plan.bestFor}</dd></div>
+              <div><dt>{copy.pricing.labels.content}</dt><dd>{plan.content}</dd></div>
+              <div><dt>{copy.pricing.labels.entity}</dt><dd>{plan.entity}</dd></div>
+              <div><dt>{copy.pricing.labels.tracking}</dt><dd>{plan.tracking}</dd></div>
+              <div><dt>{copy.pricing.labels.reporting}</dt><dd>{plan.reporting}</dd></div>
+            </dl>
+            <a class:list={['button button--wide', !plan.recommended && 'button--outline']} href={`#${ids.contact}`}>{copy.pricing.labels.choose}<Icon name="tabler:arrow-right" aria-hidden="true" /></a>
+          </article>
+        ))}
+      </div>
+      <p class="pricing-note"><Icon name="tabler:info-circle" aria-hidden="true" />{copy.pricing.note}</p>
+    </div>
+  </section>
+
+  <section class="section commitments-section">
+    <div class="site-container">
+      <SectionHeading eyebrow={copy.commitments.eyebrow} title={copy.commitments.title} />
+      <div class="commitment-grid">
+        {copy.commitments.items.map((item) => (
+          <article class="commitment-card" data-reveal>
+            <Icon name={item.icon} aria-hidden="true" />
+            <div><h3>{item.title}</h3><p>{item.description}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id={ids.contact} class="contact-section">
+    <div class="site-container contact-grid">
+      <div class="contact-copy" data-reveal>
+        <h2>{copy.contact.title}</h2>
+        <p>{copy.contact.description}</p>
+        <div class="contact-actions">
+          <a class="button button--light" href={copy.contact.phoneHref}><Icon name="tabler:phone" aria-hidden="true" />{copy.contact.call}</a>
+          <a class="button button--ghost" href={copy.contact.emailHref}><Icon name="tabler:mail" aria-hidden="true" />{copy.contact.email}</a>
+        </div>
+        <p id="contact-details" class="contact-details">{copy.contact.name} <span>·</span> {copy.contact.phone} <span>·</span> {copy.contact.emailAddress}</p>
+      </div>
+      <div class="assessment-card" data-reveal>
+        <div class="assessment-card__head"><Icon name="tabler:clipboard-check" aria-hidden="true" /><span>AI VISIBILITY ASSESSMENT</span></div>
+        <ul>{copy.contact.bullets.map((bullet) => <li><Icon name="tabler:circle-check-filled" aria-hidden="true" /><span>{bullet}</span></li>)}</ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-container footer-inner">
+    <a class="brand brand--footer" href={copy.locale === 'en' ? '/en' : '/'}><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>{copy.nav.brand}</span></a>
+    <p>{copy.footer.copyright} <em>{copy.footer.note}</em></p>
+    <a href="#main-content">{copy.footer.backToTop}<Icon name="tabler:arrow-up" aria-hidden="true" /></a>
+  </div>
+</footer>
+
+<script>
+  const revealTargets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach((target) => target.classList.add('is-visible'));
+  } else {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -48px' });
+    revealTargets.forEach((target) => revealObserver.observe(target));
+  }
+</script>

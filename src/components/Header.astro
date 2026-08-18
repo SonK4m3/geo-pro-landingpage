@@ -1,0 +1,167 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { LandingCopy } from '@/content/landing';
+
+type Props = { copy: LandingCopy };
+const { copy } = Astro.props as Props;
+const isEnglish = copy.locale === 'en';
+const languageHref = isEnglish ? '/' : '/en';
+const languageLabel = isEnglish ? 'VI' : 'EN';
+---
+
+<header
+  id="site-header"
+  class="fixed left-0 right-0 top-0 z-20 bg-[#041A34] backdrop-blur-lg transition-transform duration-300"
+>
+  <div
+    class="flex h-[var(--header-height)] w-full items-center justify-between px-5 py-4 sm:px-6 lg:px-[120px] md:grid md:grid-cols-[1fr_auto_1fr]"
+  >
+    <!-- Left: Language Switcher (Desktop only) -->
+    <div class="hidden md:block">
+      <a
+        href={languageHref}
+        class="group inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full
+          text-white font-medium text-sm transition-all duration-200
+          hover:bg-white/10 active:scale-95"
+        aria-label={`Switch language to ${languageLabel}`}
+      >
+        <span class="opacity-70 group-hover:opacity-100">{languageLabel}</span>
+      </a>
+    </div>
+
+    <!-- Center: Logo -->
+    <div class="md:justify-self-center animate-scale-in">
+      <a
+        href={isEnglish ? '/en' : '/'}
+        class="inline-flex items-center gap-3 text-white hover:opacity-80 transition-opacity"
+        aria-label="GEO Pro home"
+      >
+        <div class="flex items-center gap-1.5">
+          <div class="w-6 h-6 bg-[#F5672F] rounded-md flex items-center justify-center">
+            <span class="text-white font-bold text-sm">G</span>
+          </div>
+        </div>
+        <span class="font-bold text-lg tracking-tight hidden sm:inline">{copy.nav.brand}</span>
+      </a>
+    </div>
+
+    <!-- Right: Actions -->
+    <div class="flex items-center justify-end gap-2 md:justify-self-end">
+      <!-- Mobile Language Switcher -->
+      <div class="md:hidden">
+        <a
+          href={languageHref}
+          class="inline-flex items-center justify-center w-10 h-10
+            border border-white/20 rounded-full text-white text-xs font-bold
+            transition-all duration-200 hover:bg-white/10 active:scale-95"
+          aria-label={`Switch language to ${languageLabel}`}
+        >
+          {languageLabel}
+        </a>
+      </div>
+
+      <!-- CTA Button -->
+      <a
+        href={copy.locale === 'vi' ? '#lien-he' : '#contact'}
+        class="group inline-flex items-center justify-center gap-2 h-11 px-6 py-2 rounded-[12px]
+          bg-[#F5672F] text-white font-semibold text-sm transition-all duration-200
+          hover:bg-[#E95416] hover:shadow-lg hover:-translate-y-px active:translate-y-0
+          md:h-[44px] md:px-6 md:py-2"
+      >
+        {copy.nav.cta}
+      </a>
+
+      <!-- Mobile Menu Toggle -->
+      <details class="md:hidden group">
+        <summary
+          class="list-none cursor-pointer p-2 hover:bg-white/10 rounded-full transition-all duration-200
+            flex items-center justify-center w-10 h-10"
+          aria-label={copy.nav.openMenu}
+        >
+          <Icon
+            name="tabler:menu-2"
+            class="menu-open w-6 h-6 text-white transition-opacity group-open:opacity-0"
+            aria-hidden="true"
+          />
+          <Icon
+            name="tabler:x"
+            class="menu-close w-6 h-6 text-white absolute opacity-0 transition-opacity group-open:opacity-100"
+            aria-hidden="true"
+          />
+        </summary>
+        <nav
+          class="absolute top-full left-0 right-0 mt-2 mx-5 bg-[#082544] rounded-2xl border border-white/10
+            backdrop-blur-xl shadow-soft overflow-hidden animate-slide-up"
+          aria-label="Mobile navigation"
+        >
+          <div class="flex flex-col">
+            {
+              copy.nav.links.map((link) => (
+                <a
+                  href={link.href}
+                  class="px-5 py-3 text-white text-sm font-medium border-b border-white/10 last:border-b-0
+                    hover:bg-white/5 transition-colors duration-200"
+                >
+                  {link.label}
+                </a>
+              ))
+            }
+            <a
+              href={copy.locale === 'vi' ? '#lien-he' : '#contact'}
+              class="m-3 px-4 py-2 rounded-[12px] bg-[#F5672F] text-white font-semibold text-sm
+                text-center hover:bg-[#E95416] transition-colors duration-200"
+            >
+              {copy.nav.cta}
+            </a>
+          </div>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Close mobile menu when clicking links
+  document.querySelectorAll('[aria-label="Mobile navigation"] a:not(.button)').forEach((link) => {
+    link.addEventListener('click', () => {
+      const menu = link.closest('details');
+      if (menu) menu.removeAttribute('open');
+    });
+  });
+
+  // Header scroll effect
+  const header = document.getElementById('site-header');
+  if (header) {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const THRESHOLD = 8;
+    const HIDE_AFTER = 80;
+
+    function onScroll() {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      if (header) {
+        if (delta > THRESHOLD && currentScrollY > HIDE_AFTER) {
+          header.classList.add('-translate-y-full');
+        } else if (delta < -THRESHOLD) {
+          header.classList.remove('-translate-y-full');
+        }
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
+</script>

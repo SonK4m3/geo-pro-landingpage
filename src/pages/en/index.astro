@@ -1,0 +1,11 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LandingPage from '@/components/LandingPage.astro';
+import { landingCopy } from '@/content/landing';
+
+const copy = landingCopy.en;
+---
+
+<BaseLayout locale="en" title={copy.meta.title} description={copy.meta.description}>
+  <LandingPage copy={copy} />
+</BaseLayout>
