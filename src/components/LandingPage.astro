@@ -25,36 +25,49 @@ const layerTone: Record<string, string> = {
     <div class="hero-orb hero-orb--one" aria-hidden="true"></div>
     <div class="hero-orb hero-orb--two" aria-hidden="true"></div>
     <div class="site-container hero-inner">
-      <div class="hero-copy" data-reveal>
-        <h1>{copy.hero.title} <span>{copy.hero.titleAccent}</span></h1>
-        <p class="hero-description">{copy.hero.description}</p>
-        <a class="button button--hero" href={`#${ids.contact}`}>
-          {copy.hero.cta}
-          <Icon name="tabler:arrow-up-right" aria-hidden="true" />
-        </a>
-      </div>
+      <div class="hero-layout">
+        <div class="hero-copy" data-reveal>
+          <h1>{copy.hero.title} <span>{copy.hero.titleAccent}</span></h1>
+          <p class="hero-description">{copy.hero.description}</p>
+          <div class="hero-actions">
+            <a class="button button--hero" href={`#${ids.contact}`}>
+              {copy.hero.cta}
+              <Icon name="tabler:arrow-up-right" aria-hidden="true" />
+            </a>
+            <a class="button button--ghost" href={`#${ids.solution}`}>
+              {copy.locale === 'vi' ? 'Xem GEO hoạt động' : 'See how GEO works'}
+              <Icon name="tabler:arrow-right" aria-hidden="true" />
+            </a>
+          </div>
+          <div class="hero-badge">
+            <span>SEO</span><span class="hero-badge__dot"></span><span>AIO</span><span class="hero-badge__dot"></span><span>GEO</span>
+          </div>
+        </div>
 
-      <div class="visibility-board" data-reveal>
-        <div class="visibility-board__top">
-          <span>AI VISIBILITY MAP</span>
-          <span class="live-indicator"><i></i> LIVE</span>
+        <div class="hero-visual" data-reveal>
+          <div class="visibility-board">
+            <div class="visibility-board__top">
+              <span>AI VISIBILITY MAP</span>
+              <span class="live-indicator"><i></i> LIVE</span>
+            </div>
+            <div class="layer-grid">
+              {copy.hero.layers.map((layer) => (
+                <article class:list={['layer-card', layerTone[layer.color]]}>
+                  <div class="layer-card__header">
+                    <span class="layer-icon"><Icon name={layer.icon} aria-hidden="true" /></span>
+                    <strong>{layer.key}</strong>
+                  </div>
+                  <dl>
+                    <div><dt>{copy.hero.layerLabels.where}</dt><dd>{layer.where}</dd></div>
+                    <div><dt>{copy.hero.layerLabels.meaning}</dt><dd>{layer.meaning}</dd></div>
+                    <div class="layer-goal"><dt>{copy.hero.layerLabels.goal}</dt><dd><Icon name="tabler:circle-check-filled" aria-hidden="true" />{layer.goal}</dd></div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+            <p class="visibility-close"><Icon name="tabler:bulb" aria-hidden="true" />{copy.hero.close}</p>
+          </div>
         </div>
-        <div class="layer-grid">
-          {copy.hero.layers.map((layer) => (
-            <article class:list={['layer-card', layerTone[layer.color]]}>
-              <div class="layer-card__header">
-                <span class="layer-icon"><Icon name={layer.icon} aria-hidden="true" /></span>
-                <strong>{layer.key}</strong>
-              </div>
-              <dl>
-                <div><dt>{copy.hero.layerLabels.where}</dt><dd>{layer.where}</dd></div>
-                <div><dt>{copy.hero.layerLabels.meaning}</dt><dd>{layer.meaning}</dd></div>
-                <div class="layer-goal"><dt>{copy.hero.layerLabels.goal}</dt><dd><Icon name="tabler:circle-check-filled" aria-hidden="true" />{layer.goal}</dd></div>
-              </dl>
-            </article>
-          ))}
-        </div>
-        <p class="visibility-close"><Icon name="tabler:bulb" aria-hidden="true" />{copy.hero.close}</p>
       </div>
     </div>
   </section>

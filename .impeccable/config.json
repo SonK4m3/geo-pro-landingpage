@@ -8,6 +8,12 @@
         "value": "montserrat",
         "createdAt": "2026-08-17T07:01:12.319Z",
         "reason": "Brand typography constraint in PRODUCT.md"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-08-18T04:22:14.405Z",
+        "reason": "Brand body font constraint in DESIGN.md"
       }
     ]
   }
