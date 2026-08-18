@@ -21,15 +21,42 @@ const layerTone: Record<string, string> = {
 
 <main id="main-content">
   <section class="hero">
-    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-circuit" aria-hidden="true">
+      <svg class="circuit-svg" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Main circuit paths -->
+        <path class="circuit-line" d="M0 360 L200 360 L280 280 L480 280 L560 360 L720 360" />
+        <path class="circuit-line circuit-line--delay-1" d="M160 520 L320 520 L400 440 L600 440 L680 520 L900 520" />
+        <path class="circuit-line circuit-line--delay-2" d="M80 200 L240 200 L320 280 L440 280" />
+        <path class="circuit-line circuit-line--delay-3" d="M900 180 L1040 180 L1120 260 L1280 260" />
+        <path class="circuit-line circuit-line--delay-1" d="M720 360 L860 360 L940 440 L1100 440 L1200 340 L1280 340" />
+        <path class="circuit-line circuit-line--delay-2" d="M400 600 L560 600 L640 520 L800 520 L880 600 L1080 600" />
+        <path class="circuit-line circuit-line--delay-3" d="M1000 120 L1100 120 L1160 180 L1280 180" />
+        <!-- Orange nodes at intersections -->
+        <circle class="circuit-node" cx="280" cy="280" r="4" />
+        <circle class="circuit-node circuit-node--delay-1" cx="560" cy="360" r="5" />
+        <circle class="circuit-node circuit-node--delay-2" cx="400" cy="440" r="4" />
+        <circle class="circuit-node circuit-node--delay-1" cx="940" cy="440" r="4" />
+        <circle class="circuit-node circuit-node--delay-3" cx="640" cy="520" r="5" />
+        <circle class="circuit-node circuit-node--delay-2" cx="1120" cy="260" r="4" />
+        <circle class="circuit-node circuit-node--delay-3" cx="320" cy="520" r="3" />
+        <!-- Square nodes -->
+        <rect class="circuit-node circuit-node--delay-1" x="718" y="358" width="6" height="6" />
+        <rect class="circuit-node circuit-node--delay-2" x="898" y="518" width="6" height="6" />
+        <rect class="circuit-node circuit-node--delay-3" x="1098" y="438" width="6" height="6" />
+      </svg>
+    </div>
     <div class="hero-orb hero-orb--one" aria-hidden="true"></div>
     <div class="hero-orb hero-orb--two" aria-hidden="true"></div>
     <div class="site-container hero-inner">
       <div class="hero-layout">
-        <div class="hero-copy" data-reveal>
-          <h1>{copy.hero.title} <span>{copy.hero.titleAccent}</span></h1>
-          <p class="hero-description">{copy.hero.description}</p>
-          <div class="hero-actions">
+        <div class="hero-copy">
+          <h1 class="hero-headline" data-typewriter>
+            <span class="typewriter-line">{copy.hero.title}</span>
+            <span class="typewriter-line typewriter-line--accent">{copy.hero.titleAccent}</span>
+            <span class="typewriter-cursor" aria-hidden="true"></span>
+          </h1>
+          <p class="hero-description hero-fade-in">{copy.hero.description}</p>
+          <div class="hero-actions hero-fade-in">
             <a class="button button--hero" href={`#${ids.contact}`}>
               {copy.hero.cta}
               <Icon name="tabler:arrow-up-right" aria-hidden="true" />
@@ -39,12 +66,12 @@ const layerTone: Record<string, string> = {
               <Icon name="tabler:arrow-right" aria-hidden="true" />
             </a>
           </div>
-          <div class="hero-badge">
+          <div class="hero-badge hero-fade-in">
             <span>SEO</span><span class="hero-badge__dot"></span><span>AIO</span><span class="hero-badge__dot"></span><span>GEO</span>
           </div>
         </div>
 
-        <div class="hero-visual" data-reveal>
+        <div class="hero-visual hero-board-reveal">
           <div class="visibility-board">
             <div class="visibility-board__top">
               <span>AI VISIBILITY MAP</span>
@@ -251,9 +278,10 @@ const layerTone: Record<string, string> = {
 </footer>
 
 <script>
-  const revealTargets = document.querySelectorAll<HTMLElement>('[data-reveal]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Scroll reveal observer
+  const revealTargets = document.querySelectorAll<HTMLElement>('[data-reveal]');
   if (reducedMotion || !('IntersectionObserver' in window)) {
     revealTargets.forEach((target) => target.classList.add('is-visible'));
   } else {
@@ -265,5 +293,35 @@ const layerTone: Record<string, string> = {
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -48px' });
     revealTargets.forEach((target) => revealObserver.observe(target));
+  }
+
+  // Hero typewriter: hide cursor after animation completes
+  const cursor = document.querySelector<HTMLElement>('.typewriter-cursor');
+  if (cursor && !reducedMotion) {
+    setTimeout(() => {
+      cursor.classList.add('is-hidden');
+    }, 2400);
+  }
+
+  // Reduced motion: skip all hero animations
+  if (reducedMotion) {
+    document.querySelectorAll<HTMLElement>('.typewriter-line').forEach(el => {
+      el.style.width = '100%';
+      el.style.animation = 'none';
+    });
+    document.querySelectorAll<HTMLElement>('.hero-fade-in, .hero-board-reveal').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.animation = 'none';
+    });
+    document.querySelectorAll<HTMLElement>('.circuit-line').forEach(el => {
+      el.style.strokeDashoffset = '0';
+      el.style.animation = 'none';
+    });
+    document.querySelectorAll<HTMLElement>('.circuit-node').forEach(el => {
+      el.style.opacity = '1';
+      el.style.animation = 'none';
+    });
+    if (cursor) cursor.classList.add('is-hidden');
   }
 </script>

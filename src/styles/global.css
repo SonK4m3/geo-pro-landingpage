@@ -573,11 +573,143 @@ a:focus-visible {
 }
 
 .hero-grid-bg {
+  display: none;
+}
+
+/* Circuit-line SVG background */
+.hero-circuit {
   position: absolute;
   inset: 0;
-  opacity: 0.04;
-  background: radial-gradient(ellipse at 70% 30%, rgba(245, 103, 47, 0.15), transparent 60%);
+  overflow: hidden;
   pointer-events: none;
+  z-index: 1;
+}
+
+.circuit-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.12;
+}
+
+.circuit-line {
+  stroke: var(--navy-700);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: circuit-draw 2.5s ease-out forwards;
+}
+
+.circuit-line--delay-1 { animation-delay: 0.3s; }
+.circuit-line--delay-2 { animation-delay: 0.6s; }
+.circuit-line--delay-3 { animation-delay: 0.9s; }
+
+.circuit-node {
+  fill: var(--orange-500);
+  opacity: 0;
+  animation: node-appear 0.4s ease-out forwards, node-pulse 3s ease-in-out 2s infinite;
+}
+
+.circuit-node--delay-1 { animation-delay: 1.2s, 3.2s; }
+.circuit-node--delay-2 { animation-delay: 1.5s, 3.5s; }
+.circuit-node--delay-3 { animation-delay: 1.8s, 3.8s; }
+
+@keyframes circuit-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes node-appear {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes node-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Typewriter headline */
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.typewriter-line {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typewriter-reveal 0.8s steps(20, end) forwards;
+}
+
+.typewriter-line:nth-child(2) {
+  animation-delay: 0.9s;
+}
+
+.typewriter-line--accent {
+  color: var(--orange-500);
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: var(--orange-500);
+  margin-left: 4px;
+  vertical-align: baseline;
+  animation: cursor-blink 0.7s step-end infinite;
+  animation-delay: 0.2s;
+}
+
+.typewriter-cursor.is-hidden {
+  display: none;
+}
+
+@keyframes typewriter-reveal {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Sequenced fade-ins */
+.hero-fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: hero-element-in 0.6s ease-out forwards;
+  animation-delay: 2s;
+}
+
+.hero-actions { animation-delay: 2.0s; }
+.hero-description { animation-delay: 1.8s; }
+.hero-badge { animation-delay: 2.2s; }
+
+.hero-board-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: hero-element-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 2.4s;
+}
+
+@keyframes hero-element-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-orb {
@@ -622,18 +754,6 @@ a:focus-visible {
 
 .hero-copy {
   max-width: 560px;
-  animation: fade-in 0.8s ease-out;
-}
-
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  line-height: 0.95;
-  margin-bottom: 24px;
-  color: white;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
 }
 
 .hero h1 span {
@@ -2303,8 +2423,12 @@ a:focus-visible {
     height: 500px;
   }
 
-  .hero-grid-bg {
-    opacity: 0.02;
+  .hero-circuit {
+    opacity: 0.5;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
   }
 
   .visibility-board {
